@@ -1,0 +1,142 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fichas",
+  "info": {
+    "singularName": "ficha",
+    "pluralName": "fichas",
+    "displayName": "Ficha",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Tipo": {
+      "type": "enumeration",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "required": true
+    },
+    "SKU": {
+      "type": "enumeration",
+      "enum": [
+        "XJ29AB-4",
+        "MK58ZY-3",
+        "TR76PL-9"
+      ],
+      "required": false
+    },
+    "Titulo": {
+      "type": "string",
+      "required": true
+    },
+    "Subtitulo": {
+      "type": "text"
+    },
+    "Marca": {
+      "type": "string",
+      "required": true
+    },
+    "Linea": {
+      "type": "string"
+    },
+    "EAN": {
+      "type": "integer",
+      "required": true
+    },
+    "Modelo": {
+      "type": "string"
+    },
+    "Color": {
+      "type": "enumeration",
+      "enum": [
+        "Azul",
+        "Amarillo",
+        "Blanco",
+        "Rojo",
+        "Celeste",
+        "Verde",
+        "Negro",
+        "Marron"
+      ]
+    },
+    "Categoria": {
+      "type": "enumeration",
+      "enum": [
+        "Smartphones",
+        "Tablets",
+        "Smartwatches",
+        "Accesorios (fundas, cargadores, cables, etc.)",
+        "Laptops",
+        "PCs de escritorio",
+        "Monitores",
+        "Teclados y mouse",
+        "Impresoras y escáneres",
+        "Accesorios (soportes, hubs USB, etc.)",
+        "Auriculares y audífonos",
+        "Parlantes Bluetooth",
+        "Home Theaters",
+        "Soundbars",
+        "Televisores",
+        "Proyectores",
+        "Heladeras y freezers",
+        "Microondas",
+        "Lavarropas y secarropas",
+        "Cafeteras y pavas eléctricas",
+        "Aspiradoras y robots de limpieza"
+      ]
+    },
+    "NombreChino": {
+      "type": "string"
+    },
+    "Precio": {
+      "type": "decimal",
+      "required": false
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "fichas"
+    },
+    "Garantia": {
+      "type": "integer"
+    },
+    "EnvioGratis": {
+      "type": "boolean",
+      "default": false
+    },
+    "Peso": {
+      "type": "decimal"
+    },
+    "Largo": {
+      "type": "decimal"
+    },
+    "Alto": {
+      "type": "decimal"
+    },
+    "Profundidad": {
+      "type": "decimal"
+    },
+    "Certificacion": {
+      "type": "string"
+    },
+    "NumeroCertificacion": {
+      "type": "integer"
+    },
+    "LinksMaterial": {
+      "type": "blocks"
+    },
+    "ObservacionesAdicionales": {
+      "type": "blocks"
+    },
+    "Caracteristicas": {
+      "type": "blocks"
+    }
+  }
+}
