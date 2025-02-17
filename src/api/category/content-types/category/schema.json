@@ -14,12 +14,6 @@
   "attributes": {
     "name": {
       "type": "string"
-    },
-    "fichas": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::ficha.ficha",
-      "mappedBy": "category"
     }
   }
 }
