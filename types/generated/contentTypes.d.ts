@@ -369,99 +369,61 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiAboutAbout extends Struct.SingleTypeSchema {
-  collectionName: 'abouts';
+export interface ApiBrandBrand extends Struct.CollectionTypeSchema {
+  collectionName: 'brands';
   info: {
-    description: 'Write about yourself and the content you create';
-    displayName: 'About';
-    pluralName: 'abouts';
-    singularName: 'about';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    blocks: Schema.Attribute.DynamicZone<
-      ['shared.media', 'shared.quote', 'shared.rich-text', 'shared.slider']
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::about.about'> &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
-  collectionName: 'articles';
-  info: {
-    description: 'Create your blog content';
-    displayName: 'Article';
-    pluralName: 'articles';
-    singularName: 'article';
+    description: '';
+    displayName: 'brands';
+    pluralName: 'brands';
+    singularName: 'brand';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
-    blocks: Schema.Attribute.DynamicZone<
-      ['shared.media', 'shared.quote', 'shared.rich-text', 'shared.slider']
-    >;
-    cover: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 80;
-      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::article.article'
-    > &
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::brand.brand'> &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    products_lines: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::products-line.products-line'
+    >;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'title'>;
-    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
   };
 }
 
-export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
-  collectionName: 'authors';
+export interface ApiCategoriaCategoria extends Struct.CollectionTypeSchema {
+  collectionName: 'categorias';
   info: {
-    description: 'Create authors for your content';
-    displayName: 'Author';
-    pluralName: 'authors';
-    singularName: 'author';
+    displayName: 'categorias';
+    pluralName: 'categorias';
+    singularName: 'categoria';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   attributes: {
-    articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
-    avatar: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    email: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::author.author'
+      'api::categoria.categoria'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String;
+    nombre: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -484,7 +446,6 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    fichas: Schema.Attribute.Relation<'oneToMany', 'api::ficha.ficha'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -511,70 +472,34 @@ export interface ApiFichaFicha extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    accesorios_incluidos: Schema.Attribute.Blocks;
     Alto: Schema.Attribute.Decimal;
-    Caracteristicas: Schema.Attribute.Blocks;
-    Categoria: Schema.Attribute.Enumeration<
-      [
-        'Smartphones',
-        'Tablets',
-        'Smartwatches',
-        'Accesorios (fundas, cargadores, cables, etc.)',
-        'Laptops',
-        'PCs de escritorio',
-        'Monitores',
-        'Teclados y mouse',
-        'Impresoras y esc\u00E1neres',
-        'Accesorios (soportes, hubs USB, etc.)',
-        'Auriculares y aud\u00EDfonos',
-        'Parlantes Bluetooth',
-        'Home Theaters',
-        'Soundbars',
-        'Televisores',
-        'Proyectores',
-        'Heladeras y freezers',
-        'Microondas',
-        'Lavarropas y secarropas',
-        'Cafeteras y pavas el\u00E9ctricas',
-        'Aspiradoras y robots de limpieza',
-      ]
+    caracteristica_imagenes: Schema.Attribute.Component<
+      'caracteristicas-imagenes.caracteristica-imagenes',
+      true
     >;
-    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
     Certificacion: Schema.Attribute.String;
-    Color: Schema.Attribute.Enumeration<
-      [
-        'Azul',
-        'Amarillo',
-        'Blanco',
-        'Rojo',
-        'Celeste',
-        'Verde',
-        'Negro',
-        'Marron',
-      ]
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    EAN: Schema.Attribute.Integer & Schema.Attribute.Required;
     EnvioGratis: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    especificaciones: Schema.Attribute.Blocks;
     Garantia: Schema.Attribute.Integer;
+    imagenes: Schema.Attribute.Media<'images' | 'files', true>;
     Largo: Schema.Attribute.Decimal;
-    Linea: Schema.Attribute.String;
-    LinksMaterial: Schema.Attribute.Blocks;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::ficha.ficha'> &
       Schema.Attribute.Private;
-    Marca: Schema.Attribute.String & Schema.Attribute.Required;
-    Modelo: Schema.Attribute.String;
     NombreChino: Schema.Attribute.String;
     NumeroCertificacion: Schema.Attribute.Integer;
     ObservacionesAdicionales: Schema.Attribute.Blocks;
     Peso: Schema.Attribute.Decimal;
     Precio: Schema.Attribute.Decimal;
+    product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
     Profundidad: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
-    SKU: Schema.Attribute.Enumeration<['XJ29AB-4', 'MK58ZY-3', 'TR76PL-9']>;
     Subtitulo: Schema.Attribute.Text;
+    tags: Schema.Attribute.Blocks;
     Tipo: Schema.Attribute.Enumeration<['A', 'B', 'C', 'D']> &
       Schema.Attribute.Required;
     Titulo: Schema.Attribute.String & Schema.Attribute.Required;
@@ -610,6 +535,85 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
     siteName: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiProductProduct extends Struct.CollectionTypeSchema {
+  collectionName: 'products';
+  info: {
+    description: '';
+    displayName: 'products';
+    pluralName: 'products';
+    singularName: 'product';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    brand: Schema.Attribute.Relation<'oneToOne', 'api::brand.brand'>;
+    caracteristica: Schema.Attribute.Blocks;
+    categoria_principal: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::categoria.categoria'
+    >;
+    categorias_secundarias: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::categoria.categoria'
+    >;
+    color: Schema.Attribute.Enumeration<
+      ['blanco', 'negro', 'azul', 'verde', 'rojo', 'marron', 'celeste', 'rosa']
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ean: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product.product'
+    > &
+      Schema.Attribute.Private;
+    modelo: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    sku: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiProductsLineProductsLine
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'products_lines';
+  info: {
+    displayName: 'productsLines';
+    pluralName: 'products-lines';
+    singularName: 'products-line';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    line: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::products-line.products-line'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1125,12 +1129,13 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::about.about': ApiAboutAbout;
-      'api::article.article': ApiArticleArticle;
-      'api::author.author': ApiAuthorAuthor;
+      'api::brand.brand': ApiBrandBrand;
+      'api::categoria.categoria': ApiCategoriaCategoria;
       'api::category.category': ApiCategoryCategory;
       'api::ficha.ficha': ApiFichaFicha;
       'api::global.global': ApiGlobalGlobal;
+      'api::product.product': ApiProductProduct;
+      'api::products-line.products-line': ApiProductsLineProductsLine;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products_lines",
+  "info": {
+    "singularName": "products-line",
+    "pluralName": "products-lines",
+    "displayName": "productsLines"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "line": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_linea_lineas",
+  "info": {
+    "displayName": "linea",
+    "icon": "cursor"
+  },
+  "options": {},
+  "attributes": {
+    "linea": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_caracteristicas_imagenes_caracteristica_imagenes",
+  "info": {
+    "displayName": "Caracteristica imagenes",
+    "icon": "cursor",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "imagen_numero": {
+      "type": "integer"
+    },
+    "sugerencias": {
+      "type": "blocks"
+    },
+    "link_referencia": {
+      "type": "string"
+    },
+    "caracteristicas": {
+      "type": "blocks"
+    }
+  }
+}
