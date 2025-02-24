@@ -17,10 +17,11 @@
       "required": true,
       "unique": true
     },
-    "products_lines": {
+    "brand_lines": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::products-line.products-line"
+      "target": "api::products-line.products-line",
+      "mappedBy": "brand"
     }
   }
 }

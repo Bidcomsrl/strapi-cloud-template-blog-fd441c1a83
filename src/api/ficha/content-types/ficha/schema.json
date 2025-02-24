@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Tipo": {
+    "type": {
       "type": "enumeration",
       "enum": [
         "A",
@@ -22,49 +22,49 @@
       ],
       "required": true
     },
-    "Titulo": {
+    "title": {
       "type": "string",
       "required": true
     },
-    "Subtitulo": {
+    "subtitle": {
       "type": "text"
     },
-    "NombreChino": {
+    "chineseName": {
       "type": "string"
     },
-    "Precio": {
+    "price": {
       "type": "decimal",
       "required": false
     },
-    "Garantia": {
+    "warranty": {
       "type": "integer"
     },
-    "EnvioGratis": {
+    "freeShipping": {
       "type": "boolean",
       "default": false
     },
-    "Peso": {
+    "weight": {
       "type": "decimal"
     },
-    "Largo": {
+    "length": {
       "type": "decimal"
     },
-    "Alto": {
+    "height": {
       "type": "decimal"
     },
-    "Profundidad": {
+    "depth": {
       "type": "decimal"
     },
-    "Certificacion": {
+    "certification": {
       "type": "string"
     },
-    "NumeroCertificacion": {
+    "certificationNumber": {
       "type": "integer"
     },
-    "ObservacionesAdicionales": {
+    "additionalObservations": {
       "type": "blocks"
     },
-    "imagenes": {
+    "images": {
       "type": "media",
       "multiple": true,
       "required": false,
@@ -78,19 +78,24 @@
       "relation": "oneToOne",
       "target": "api::product.product"
     },
-    "especificaciones": {
+    "specifications": {
       "type": "blocks"
     },
-    "accesorios_incluidos": {
+    "includedAccessories": {
       "type": "blocks"
     },
     "tags": {
       "type": "blocks"
     },
-    "caracteristica_imagenes": {
+    "image_features": {
       "type": "component",
       "repeatable": true,
       "component": "caracteristicas-imagenes.caracteristica-imagenes"
+    },
+    "admin_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "admin::user"
     }
   }
 }
