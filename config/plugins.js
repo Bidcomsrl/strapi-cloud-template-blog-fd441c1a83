@@ -5,3 +5,4 @@ module.exports = {
     resolve: "./src/plugins/parent-child"
   },
   };
+  

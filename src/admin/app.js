@@ -32,15 +32,10 @@ const config = {
 
 export default {
   config,
-    register(app) {
-      console.log("BOOOOOOOT app.js");
-},
+  register(app) {
+
+  },
   bootstrap(app) {
-    console.log("BOOOOOOOT app.js");
-    
-
-
-   
   }
 
 };
