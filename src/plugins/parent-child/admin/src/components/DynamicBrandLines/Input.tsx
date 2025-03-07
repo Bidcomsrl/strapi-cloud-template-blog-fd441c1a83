@@ -9,7 +9,7 @@ const LineSelectField = ({ name, value, onChange, intlLabel, disabled, error }) 
   const [loading, setLoading] = useState(false);
   const [selectedLine, setSelectedLine] = useState(null);
 
-  const brandDocumentId = values.marca;
+  const brandDocumentId = values.brand;
 
   useEffect(() => {
     if(value){
