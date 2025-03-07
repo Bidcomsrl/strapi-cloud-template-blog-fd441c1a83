@@ -8,5 +8,11 @@ module.exports = (config) => {
         '@': '/src',
       },
     },
+    build: {
+      rollupOptions: {
+        external: ['@strapi/design-system/v2']
+      }
+    }
   });
 };
+

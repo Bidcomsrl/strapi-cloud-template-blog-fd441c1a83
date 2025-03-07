@@ -30,7 +30,7 @@
         "rosa"
       ]
     },
-    "modelo": {
+    "model": {
       "type": "string"
     },
     "sku": {
@@ -38,23 +38,26 @@
       "unique": true,
       "required": true
     },
-    "caracteristica": {
+    "features": {
       "type": "blocks"
     },
-    "brand": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::brand.brand"
-    },
-    "categoria_principal": {
+    "principal_category": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::categoria.categoria"
     },
-    "categorias_secundarias": {
+    "secondary_category": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::categoria.categoria"
+    },
+    "brand": {
+      "type": "customField",
+      "customField": "plugin::parent-child.brandSelect"
+    },
+    "line": {
+      "type": "customField",
+      "customField": "plugin::parent-child.dynamicBrandLines"
     }
   }
 }

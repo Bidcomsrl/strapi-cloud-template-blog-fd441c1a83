@@ -103,6 +103,43 @@ export interface AdminApiTokenPermission extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface AdminAuditLog extends Struct.CollectionTypeSchema {
+  collectionName: 'strapi_audit_logs';
+  info: {
+    displayName: 'Audit Log';
+    pluralName: 'audit-logs';
+    singularName: 'audit-log';
+  };
+  options: {
+    draftAndPublish: false;
+    timestamps: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    action: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'admin::audit-log'> &
+      Schema.Attribute.Private;
+    payload: Schema.Attribute.JSON;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+  };
+}
+
 export interface AdminPermission extends Struct.CollectionTypeSchema {
   collectionName: 'admin_permissions';
   info: {
@@ -381,6 +418,10 @@ export interface ApiBrandBrand extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    brand_lines: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::products-line.products-line'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -390,11 +431,12 @@ export interface ApiBrandBrand extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-    products_lines: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::products-line.products-line'
-    >;
     publishedAt: Schema.Attribute.DateTime;
+    strapi_assignee: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    strapi_stage: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::review-workflows.workflow-stage'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -404,7 +446,8 @@ export interface ApiBrandBrand extends Struct.CollectionTypeSchema {
 export interface ApiCategoriaCategoria extends Struct.CollectionTypeSchema {
   collectionName: 'categorias';
   info: {
-    displayName: 'categorias';
+    description: '';
+    displayName: 'categories';
     pluralName: 'categorias';
     singularName: 'categoria';
   };
@@ -421,39 +464,15 @@ export interface ApiCategoriaCategoria extends Struct.CollectionTypeSchema {
       'api::categoria.categoria'
     > &
       Schema.Attribute.Private;
-    nombre: Schema.Attribute.String &
+    name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
-  collectionName: 'categories';
-  info: {
-    description: 'Organize your content into categories';
-    displayName: 'Category';
-    pluralName: 'categories';
-    singularName: 'category';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::category.category'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
+    strapi_assignee: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    strapi_stage: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::review-workflows.workflow-stage'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -472,40 +491,46 @@ export interface ApiFichaFicha extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    accesorios_incluidos: Schema.Attribute.Blocks;
-    Alto: Schema.Attribute.Decimal;
-    caracteristica_imagenes: Schema.Attribute.Component<
-      'caracteristicas-imagenes.caracteristica-imagenes',
-      true
-    >;
-    Certificacion: Schema.Attribute.String;
+    additionalObservations: Schema.Attribute.Blocks;
+    admin_user: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    certification: Schema.Attribute.String;
+    certificationNumber: Schema.Attribute.Integer;
+    chineseName: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    EnvioGratis: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    especificaciones: Schema.Attribute.Blocks;
-    Garantia: Schema.Attribute.Integer;
-    imagenes: Schema.Attribute.Media<'images' | 'files', true>;
-    Largo: Schema.Attribute.Decimal;
+    depth: Schema.Attribute.Decimal;
+    freeShipping: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    height: Schema.Attribute.Decimal;
+    image_features: Schema.Attribute.Component<
+      'caracteristicas-imagenes.caracteristica-imagenes',
+      true
+    >;
+    images: Schema.Attribute.Media<'images' | 'files', true>;
+    includedAccessories: Schema.Attribute.Blocks;
+    length: Schema.Attribute.Decimal;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::ficha.ficha'> &
       Schema.Attribute.Private;
-    NombreChino: Schema.Attribute.String;
-    NumeroCertificacion: Schema.Attribute.Integer;
-    ObservacionesAdicionales: Schema.Attribute.Blocks;
-    Peso: Schema.Attribute.Decimal;
-    Precio: Schema.Attribute.Decimal;
+    price: Schema.Attribute.Decimal;
     product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
-    Profundidad: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
-    Subtitulo: Schema.Attribute.Text;
+    specifications: Schema.Attribute.Blocks;
+    strapi_assignee: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    strapi_stage: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::review-workflows.workflow-stage'
+    >;
+    subtitle: Schema.Attribute.Text;
     tags: Schema.Attribute.Blocks;
-    Tipo: Schema.Attribute.Enumeration<['A', 'B', 'C', 'D']> &
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    type: Schema.Attribute.Enumeration<['A', 'B', 'C', 'D']> &
       Schema.Attribute.Required;
-    Titulo: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    warranty: Schema.Attribute.Integer;
+    weight: Schema.Attribute.Decimal;
   };
 }
 
@@ -535,6 +560,11 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
     siteName: Schema.Attribute.String & Schema.Attribute.Required;
+    strapi_assignee: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    strapi_stage: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::review-workflows.workflow-stage'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -553,16 +583,8 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    brand: Schema.Attribute.Relation<'oneToOne', 'api::brand.brand'>;
-    caracteristica: Schema.Attribute.Blocks;
-    categoria_principal: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::categoria.categoria'
-    >;
-    categorias_secundarias: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::categoria.categoria'
-    >;
+    brand: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::parent-child.brandSelect'>;
     color: Schema.Attribute.Enumeration<
       ['blanco', 'negro', 'azul', 'verde', 'rojo', 'marron', 'celeste', 'rosa']
     >;
@@ -572,17 +594,33 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     ean: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    features: Schema.Attribute.Blocks;
+    line: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::parent-child.dynamicBrandLines'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::product.product'
     > &
       Schema.Attribute.Private;
-    modelo: Schema.Attribute.String;
+    model: Schema.Attribute.String;
+    principal_category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::categoria.categoria'
+    >;
     publishedAt: Schema.Attribute.DateTime;
+    secondary_category: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::categoria.categoria'
+    >;
     sku: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    strapi_assignee: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    strapi_stage: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::review-workflows.workflow-stage'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -593,7 +631,8 @@ export interface ApiProductsLineProductsLine
   extends Struct.CollectionTypeSchema {
   collectionName: 'products_lines';
   info: {
-    displayName: 'productsLines';
+    description: '';
+    displayName: 'brandLines';
     pluralName: 'products-lines';
     singularName: 'products-line';
   };
@@ -601,6 +640,7 @@ export interface ApiProductsLineProductsLine
     draftAndPublish: true;
   };
   attributes: {
+    brand: Schema.Attribute.Relation<'manyToOne', 'api::brand.brand'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -613,7 +653,13 @@ export interface ApiProductsLineProductsLine
       'api::products-line.products-line'
     > &
       Schema.Attribute.Private;
+    products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
+    strapi_assignee: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    strapi_stage: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::review-workflows.workflow-stage'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1107,6 +1153,11 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    strapi_assignee: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    strapi_stage: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::review-workflows.workflow-stage'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1124,6 +1175,7 @@ declare module '@strapi/strapi' {
     export interface ContentTypeSchemas {
       'admin::api-token': AdminApiToken;
       'admin::api-token-permission': AdminApiTokenPermission;
+      'admin::audit-log': AdminAuditLog;
       'admin::permission': AdminPermission;
       'admin::role': AdminRole;
       'admin::transfer-token': AdminTransferToken;
@@ -1131,7 +1183,6 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::brand.brand': ApiBrandBrand;
       'api::categoria.categoria': ApiCategoriaCategoria;
-      'api::category.category': ApiCategoryCategory;
       'api::ficha.ficha': ApiFichaFicha;
       'api::global.global': ApiGlobalGlobal;
       'api::product.product': ApiProductProduct;
