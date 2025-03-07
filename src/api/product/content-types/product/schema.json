@@ -41,11 +41,6 @@
     "features": {
       "type": "blocks"
     },
-    "brand": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::brand.brand"
-    },
     "principal_category": {
       "type": "relation",
       "relation": "oneToOne",
@@ -56,12 +51,13 @@
       "relation": "oneToMany",
       "target": "api::categoria.categoria"
     },
-    "brand_line": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::products-line.products-line",
-      "inversedBy": "products"
+    "brand": {
+      "type": "customField",
+      "customField": "plugin::parent-child.brandSelect"
+    },
+    "line": {
+      "type": "customField",
+      "customField": "plugin::parent-child.dynamicBrandLines"
     }
-
   }
 }

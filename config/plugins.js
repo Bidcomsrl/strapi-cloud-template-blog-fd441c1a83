@@ -1,7 +1,7 @@
 
 module.exports = {
-    'custom-plugin': {
-        enabled: true,
-        resolve: './src/plugins/custom-plugin'
-      },
+      'parent-child': {
+    enabled: true,
+    resolve: "./src/plugins/parent-child"
+  },
   };

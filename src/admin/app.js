@@ -29,11 +29,22 @@ const config = {
   ],
 };
 
-const bootstrap = (app) => {
-  console.log(app);
-};
 
 export default {
   config,
-  bootstrap,
+    register(app) {
+      console.log("BOOOOOOOT app.js");
+},
+  bootstrap(app) {
+    console.log("BOOOOOOOT app.js");
+    
+
+
+   
+  }
+
 };
+
+
+
+

@@ -10,7 +10,7 @@ export interface CaracteristicasImagenesCaracteristicaImagenes
   };
   attributes: {
     caracteristicas: Schema.Attribute.Blocks;
-    imagen_numero: Schema.Attribute.Integer;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     link_referencia: Schema.Attribute.String;
     sugerencias: Schema.Attribute.Blocks;
   };

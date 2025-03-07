@@ -8,9 +8,11 @@ const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController("api::products-line.products-line", ({ strapi }) => ({
   async find(ctx) {
-    
+    const { filters, status } = ctx.request.query;
+
     const modelos = await strapi.entityService.findMany("api::products-line.products-line", {
-      filters: ctx.request.query.filters,
+      filters: filters,
+      status:  status
     }); 
 
     return modelos;
