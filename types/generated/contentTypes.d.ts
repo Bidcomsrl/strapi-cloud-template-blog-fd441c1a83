@@ -443,13 +443,13 @@ export interface ApiBrandBrand extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiCategoriaCategoria extends Struct.CollectionTypeSchema {
-  collectionName: 'categorias';
+export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
+  collectionName: 'category';
   info: {
     description: '';
     displayName: 'categories';
-    pluralName: 'categorias';
-    singularName: 'categoria';
+    pluralName: 'categories';
+    singularName: 'category';
   };
   options: {
     draftAndPublish: true;
@@ -461,7 +461,7 @@ export interface ApiCategoriaCategoria extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::categoria.categoria'
+      'api::category.category'
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String &
@@ -492,7 +492,6 @@ export interface ApiFichaFicha extends Struct.CollectionTypeSchema {
   };
   attributes: {
     additionalObservations: Schema.Attribute.Blocks;
-    admin_user: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     certification: Schema.Attribute.String;
     certificationNumber: Schema.Attribute.Integer;
     chineseName: Schema.Attribute.String;
@@ -606,12 +605,12 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     model: Schema.Attribute.String;
     principal_category: Schema.Attribute.Relation<
       'oneToOne',
-      'api::categoria.categoria'
+      'api::category.category'
     >;
     publishedAt: Schema.Attribute.DateTime;
     secondary_category: Schema.Attribute.Relation<
       'oneToMany',
-      'api::categoria.categoria'
+      'api::category.category'
     >;
     sku: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -653,7 +652,6 @@ export interface ApiProductsLineProductsLine
       'api::products-line.products-line'
     > &
       Schema.Attribute.Private;
-    products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     strapi_assignee: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     strapi_stage: Schema.Attribute.Relation<
@@ -1182,7 +1180,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::brand.brand': ApiBrandBrand;
-      'api::categoria.categoria': ApiCategoriaCategoria;
+      'api::category.category': ApiCategoryCategory;
       'api::ficha.ficha': ApiFichaFicha;
       'api::global.global': ApiGlobalGlobal;
       'api::product.product': ApiProductProduct;

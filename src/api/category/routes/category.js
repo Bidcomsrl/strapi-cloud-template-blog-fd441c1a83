@@ -6,4 +6,4 @@
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::categoria.categoria');
+module.exports = createCoreRouter('api::category.category');

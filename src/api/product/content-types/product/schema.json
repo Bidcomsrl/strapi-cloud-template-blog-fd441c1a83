@@ -44,12 +44,12 @@
     "principal_category": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::categoria.categoria"
+      "target": "api::category.category"
     },
     "secondary_category": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::categoria.categoria"
+      "target": "api::category.category"
     },
     "brand": {
       "type": "customField",
